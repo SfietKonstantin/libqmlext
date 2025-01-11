@@ -9,7 +9,7 @@ class EventBus;
 class Item : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(EventBus *eventBus READ eventBus WRITE setEventBus NOTIFY eventBusChanged)
+    Q_PROPERTY(qmlext::EventBus *eventBus READ eventBus WRITE setEventBus NOTIFY eventBusChanged)
     Q_PROPERTY(QVariant key READ key WRITE setKey NOTIFY keyChanged)
     Q_PROPERTY(QVariant value READ value NOTIFY valueChanged)
 public:
