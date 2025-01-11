@@ -1,0 +1,32 @@
+name: Github CI build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: 5.15.2
+        host: linux
+        target: desktop
+        arch: gcc_64
+        dir: ${{ runner.temp }}
+
+    - name: Build
+      run:  |
+        cmake . -DCMAKE_BUILD_TYPE=Debug
+        make
