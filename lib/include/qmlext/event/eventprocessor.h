@@ -4,7 +4,8 @@
 #include <functional>
 #include <qmlext/event/event.h>
 
-namespace qmlext::event {
+namespace qmlext {
+namespace event {
 
 class EventProcessor
 {
@@ -22,4 +23,5 @@ protected:
     explicit EventProcessor() = default;
 };
 
-} // namespace qmlext::event
+} // namespace event
+} // namespace qmlext

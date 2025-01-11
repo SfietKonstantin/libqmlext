@@ -1,5 +1,6 @@
 #include <qmlext/event/json/jsoneventadapter.h>
 
+#include <QDateTime>
 #include <QJsonDocument>
 #include <QLoggingCategory>
 #include <algorithm>
@@ -18,7 +19,11 @@ QVariant convertToDate(const QVariant &value)
     }
 
     auto stringValue = value.toString();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
     auto dateTime = QDateTime::fromString(stringValue, Qt::ISODateWithMs);
+#else
+    auto dateTime = QDateTime::fromString(stringValue, Qt::ISODate);
+#endif
 
     if (dateTime.isValid()) {
         return dateTime;
@@ -39,8 +44,8 @@ QVariant recursivelyConvert(const QVariant &value)
     if (value.canConvert<QMap<QString, QVariant>>()) {
         auto map = value.toMap();
         auto newMap = QVariantMap();
-        std::for_each(map.constKeyValueBegin(), map.constKeyValueEnd(), [&newMap](const auto &pair) {
-            newMap.insert(pair.first, recursivelyConvert(pair.second));
+        std::for_each(map.keyBegin(), map.keyEnd(), [&map, &newMap](const auto &key) {
+            newMap.insert(key, recursivelyConvert(map.value(key)));
         });
         return newMap;
     }

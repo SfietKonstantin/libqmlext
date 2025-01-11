@@ -2,7 +2,8 @@
 
 #include <QVariant>
 
-namespace qmlext::event {
+namespace qmlext {
+namespace event {
 
 enum class EventType {
     Set,
@@ -27,4 +28,5 @@ private:
     int m_last{0};
 };
 
-} // namespace qmlext::event
+} // namespace event
+} // namespace qmlext

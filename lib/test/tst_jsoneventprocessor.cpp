@@ -37,6 +37,7 @@ private slots:
         QCOMPARE(actual.toMap()["date"].type(), QVariant::DateTime);
     }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
     void test_convert_date_time_without_ms()
     {
         auto actual = JsonEventAdapter::fromJson(R"({"date":"2025-01-04T12:34:56Z"})");
@@ -52,6 +53,7 @@ private slots:
                 QVariant(QVariantMap{{"date", QVariant(QDateTime(QDate(2025, 1, 4), QTime(12, 34, 56), Qt::UTC))}})};
         QCOMPARE(actual, expected);
     }
+#endif
 
     void test_convert_from_json_handles_invalid_json()
     {

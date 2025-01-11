@@ -4,7 +4,9 @@
 #include <functional>
 #include <qmlext/event/event.h>
 
-namespace qmlext::event::json {
+namespace qmlext {
+namespace event {
+namespace json {
 
 class JsonEventProcessor
 {
@@ -23,4 +25,6 @@ protected:
     explicit JsonEventProcessor() = default;
 };
 
-} // namespace qmlext::event::json
+} // namespace json
+} // namespace event
+} // namespace qmlext
