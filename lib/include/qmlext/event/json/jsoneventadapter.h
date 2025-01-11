@@ -12,7 +12,7 @@ class JsonEventAdapter : public EventProcessor
 {
 public:
     explicit JsonEventAdapter(std::unique_ptr<JsonEventProcessor> jsonEventProcessor);
-    void execute(EventPublisher eventPublisher, const QVariant &id, const QVariant &args) override;
+    void execute(EventPublisher eventPublisher, const QVariant &key, const QVariant &args) override;
 
     static QVariant fromJson(const QByteArray &json);
     static QByteArray toJson(const QVariant &value);

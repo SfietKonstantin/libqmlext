@@ -12,12 +12,12 @@ class EventBus : public QObject
     Q_OBJECT
 public:
     explicit EventBus(std::unique_ptr<event::EventProcessor> eventProcessor, QObject *parent = nullptr);
-    void execute(const QVariant &id, const QVariant &args);
+    void execute(const QVariant &key, const QVariant &args);
 signals:
-    void setEvent(const QVariant &id, const QVariant &value);
+    void setEvent(const QVariant &key, const QVariant &value);
 
 private:
-    void publishEvent(const event::Event &event, const QVariant &id, const QVariant &value);
+    void publishEvent(const event::Event &event, const QVariant &key, const QVariant &value);
     std::unique_ptr<event::EventProcessor> m_eventProcessor;
 };
 

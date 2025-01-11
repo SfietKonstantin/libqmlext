@@ -7,18 +7,18 @@ EventBus::EventBus(std::unique_ptr<event::EventProcessor> eventProcessor, QObjec
 {
 }
 
-void EventBus::execute(const QVariant &id, const QVariant &args)
+void EventBus::execute(const QVariant &key, const QVariant &args)
 {
-    auto publishItem = [this](const event::Event &event, const QVariant &id, const QVariant &value) {
-        publishEvent(event, id, value);
+    auto publishItem = [this](const event::Event &event, const QVariant &key, const QVariant &value) {
+        publishEvent(event, key, value);
     };
-    m_eventProcessor->execute(std::move(publishItem), id, args);
+    m_eventProcessor->execute(std::move(publishItem), key, args);
 }
-void EventBus::publishEvent(const event::Event &event, const QVariant &id, const QVariant &value)
+void EventBus::publishEvent(const event::Event &event, const QVariant &key, const QVariant &value)
 {
     switch (event.type()) {
         case event::EventType::Set:
-            emit setEvent(id, value);
+            emit setEvent(key, value);
             break;
         default:
             break;

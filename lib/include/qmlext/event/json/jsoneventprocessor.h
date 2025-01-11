@@ -10,7 +10,7 @@ namespace json {
 
 class JsonEventProcessor
 {
-    using EventPublisher = std::function<void(const Event &event, const QByteArray &id, const QByteArray &value)>;
+    using EventPublisher = std::function<void(const Event &event, const QByteArray &key, const QByteArray &value)>;
 
 public:
     JsonEventProcessor(const JsonEventProcessor &other) = delete;
@@ -19,7 +19,7 @@ public:
     JsonEventProcessor &operator=(JsonEventProcessor &&other) = delete;
 
     virtual ~JsonEventProcessor() = default;
-    virtual void execute(EventPublisher eventPublisher, QByteArray id, QByteArray args) = 0;
+    virtual void execute(EventPublisher eventPublisher, QByteArray key, QByteArray args) = 0;
 
 protected:
     explicit JsonEventProcessor() = default;

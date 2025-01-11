@@ -33,16 +33,16 @@ void Item::setEventBus(EventBus *eventBus)
     }
 }
 
-const QVariant &Item::id() const
+const QVariant &Item::key() const
 {
-    return m_id;
+    return m_key;
 }
 
-void Item::setId(QVariant id)
+void Item::setKey(QVariant key)
 {
-    if (m_id != id) {
-        m_id = std::move(id);
-        emit idChanged();
+    if (m_key != key) {
+        m_key = std::move(key);
+        emit keyChanged();
     }
 }
 
@@ -51,9 +51,9 @@ const QVariant &Item::value() const
     return m_value;
 }
 
-void Item::handleSetEvent(const QVariant &id, const QVariant &value)
+void Item::handleSetEvent(const QVariant &key, const QVariant &value)
 {
-    if (m_id != id) {
+    if (m_key != key) {
         return;
     }
 
@@ -68,7 +68,7 @@ void Item::execute(const QVariant &args)
         return;
     }
 
-    m_eventBus->execute(m_id, args);
+    m_eventBus->execute(m_key, args);
 }
 
 } // namespace qmlext

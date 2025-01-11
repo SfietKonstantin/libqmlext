@@ -60,9 +60,9 @@ public:
         : m_eventPublisher(std::move(eventPublisher))
     {
     }
-    void operator()(const Event &event, const QByteArray &id, const QByteArray &value)
+    void operator()(const Event &event, const QByteArray &key, const QByteArray &value)
     {
-        m_eventPublisher(event, JsonEventAdapter::fromJson(id), JsonEventAdapter::fromJson(value));
+        m_eventPublisher(event, JsonEventAdapter::fromJson(key), JsonEventAdapter::fromJson(value));
     }
 
 private:
@@ -76,11 +76,11 @@ JsonEventAdapter::JsonEventAdapter(std::unique_ptr<JsonEventProcessor> jsonEvent
 {
 }
 
-void JsonEventAdapter::execute(EventPublisher eventPublisher, const QVariant &id, const QVariant &args)
+void JsonEventAdapter::execute(EventPublisher eventPublisher, const QVariant &key, const QVariant &args)
 {
-    auto idJson = toJson(id);
+    auto keyJson = toJson(key);
     auto argsJson = toJson(args);
-    m_jsonEventProcessor->execute(EventPublisherAdaptor(std::move(eventPublisher)), std::move(idJson), std::move(argsJson));
+    m_jsonEventProcessor->execute(EventPublisherAdaptor(std::move(eventPublisher)), std::move(keyJson), std::move(argsJson));
 }
 
 QVariant JsonEventAdapter::fromJson(const QByteArray &json)
