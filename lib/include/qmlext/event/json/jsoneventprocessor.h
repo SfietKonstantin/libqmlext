@@ -10,9 +10,8 @@ namespace json {
 
 class JsonEventProcessor
 {
-    using EventPublisher = std::function<void(const Event &event, const QByteArray &key, const QByteArray &value)>;
-
 public:
+    using EventPublisher = std::function<void(const Event &event, const QByteArray &key, const QByteArray &value)>;
     JsonEventProcessor(const JsonEventProcessor &other) = delete;
     JsonEventProcessor(JsonEventProcessor &&other) = delete;
     JsonEventProcessor &operator=(const JsonEventProcessor &other) = delete;
