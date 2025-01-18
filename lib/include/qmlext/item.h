@@ -19,6 +19,7 @@ public:
     const QVariant &key() const;
     Q_INVOKABLE void setKey(QVariant key);
     const QVariant &value() const;
+    Q_INVOKABLE void execute();
     Q_INVOKABLE void execute(const QVariant &args);
 signals:
     void eventBusChanged();

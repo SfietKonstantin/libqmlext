@@ -62,6 +62,12 @@ void Item::handleSetEvent(const QVariant &key, const QVariant &value)
         emit valueChanged();
     }
 }
+
+void Item::execute()
+{
+    execute(QVariant());
+}
+
 void Item::execute(const QVariant &args)
 {
     if (m_eventBus == nullptr) {
