@@ -8,6 +8,7 @@ set(CMAKE_AUTOMOC ON)
 add_library(${PROJECT_NAME} STATIC
     include/qmlext/eventbus.h
     include/qmlext/item.h
+    include/qmlext/listmodel.h
     include/qmlext/event/event.h
     include/qmlext/event/eventprocessor.h
     include/qmlext/event/json/jsoneventadapter.h
@@ -15,6 +16,7 @@ add_library(${PROJECT_NAME} STATIC
 
     src/eventbus.cpp
     src/item.cpp
+    src/listmodel.cpp
     src/event/event.cpp
     src/event/eventprocessor.cpp
     src/event/json/jsoneventadapter.cpp

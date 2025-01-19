@@ -15,6 +15,7 @@ public:
     void execute(const QVariant &key, const QVariant &args);
 signals:
     void setEvent(const QVariant &key, const QVariant &value);
+    void appendEvent(const QVariant &key, const QVariant &value);
 
 private:
     void publishEvent(const event::Event &event, const QVariant &key, const QVariant &value);

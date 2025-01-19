@@ -1,6 +1,6 @@
 #include "qmlext/item.h"
 
-#include "qmlext/eventbus.h"
+#include <qmlext/eventbus.h>
 
 namespace qmlext {
 
@@ -51,18 +51,6 @@ const QVariant &Item::value() const
     return m_value;
 }
 
-void Item::handleSetEvent(const QVariant &key, const QVariant &value)
-{
-    if (m_key != key) {
-        return;
-    }
-
-    if (m_value != value) {
-        m_value = value;
-        emit valueChanged();
-    }
-}
-
 void Item::execute()
 {
     execute(QVariant());
@@ -75,6 +63,18 @@ void Item::execute(const QVariant &args)
     }
 
     m_eventBus->execute(m_key, args);
+}
+
+void Item::handleSetEvent(const QVariant &key, const QVariant &value)
+{
+    if (m_key != key) {
+        return;
+    }
+
+    if (m_value != value) {
+        m_value = value;
+        emit valueChanged();
+    }
 }
 
 } // namespace qmlext

@@ -37,6 +37,9 @@ void EventBus::publishEvent(const event::Event &event, const QVariant &key, cons
         case event::EventType::Set:
             emit setEvent(key, value);
             break;
+        case event::EventType::Append:
+            emit appendEvent(key, value);
+            break;
         default:
             break;
     }
