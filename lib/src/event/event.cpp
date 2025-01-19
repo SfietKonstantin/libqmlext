@@ -4,7 +4,9 @@ namespace qmlext::event {
 
 
 Event::Event(EventType type, int first, int last)
-    : m_type(type), m_first(first), m_last(last)
+    : m_type(type)
+    , m_first(first)
+    , m_last(last)
 {
 }
 

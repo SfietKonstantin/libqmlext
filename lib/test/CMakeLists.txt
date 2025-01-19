@@ -7,7 +7,7 @@ find_package(Qt5 REQUIRED COMPONENTS Test)
 set(CMAKE_AUTOMOC ON)
 
 add_executable(${PROJECT_NAME}
-    tst_jsoneventprocessor.cpp
+    tst_qmlext.cpp
 )
 add_test(${PROJECT_NAME} ${PROJECT_NAME})
 

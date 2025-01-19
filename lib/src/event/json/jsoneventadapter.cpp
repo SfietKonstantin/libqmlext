@@ -44,9 +44,8 @@ QVariant recursivelyConvert(const QVariant &value)
     if (value.canConvert<QMap<QString, QVariant>>()) {
         auto map = value.toMap();
         auto newMap = QVariantMap();
-        std::for_each(map.keyBegin(), map.keyEnd(), [&map, &newMap](const auto &key) {
-            newMap.insert(key, recursivelyConvert(map.value(key)));
-        });
+        std::for_each(map.keyBegin(), map.keyEnd(),
+                      [&map, &newMap](const auto &key) { newMap.insert(key, recursivelyConvert(map.value(key))); });
         return newMap;
     }
 
@@ -80,7 +79,8 @@ void JsonEventAdapter::execute(EventPublisher eventPublisher, const QVariant &ke
 {
     auto keyJson = toJson(key);
     auto argsJson = toJson(args);
-    m_jsonEventProcessor->execute(EventPublisherAdaptor(std::move(eventPublisher)), std::move(keyJson), std::move(argsJson));
+    m_jsonEventProcessor->execute(EventPublisherAdaptor(std::move(eventPublisher)), std::move(keyJson),
+                                  std::move(argsJson));
 }
 
 QVariant JsonEventAdapter::fromJson(const QByteArray &json)
@@ -97,6 +97,10 @@ QVariant JsonEventAdapter::fromJson(const QByteArray &json)
 
 QByteArray JsonEventAdapter::toJson(const QVariant &value)
 {
+    if (!value.isValid() || value.isNull()) {
+        return "null";
+    }
+
     auto document = QJsonDocument::fromVariant(value);
     return document.toJson(QJsonDocument::Compact);
 }
