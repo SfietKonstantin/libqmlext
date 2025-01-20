@@ -198,6 +198,33 @@ private slots:
         item->setEventBus(nullptr);
     }
 
+    void test_item_execute_with_json_and_strings()
+    {
+        auto executed = false;
+        auto publisherImpl = [&executed](auto publisher, const auto &key, const auto &args) {
+            QCOMPARE(key, QByteArray(R"({"key":"value"})"));
+            QCOMPARE(args, QByteArray(R"("test")"));
+
+            publisher(Event(EventType::Set), key, QByteArray(R"("value")"));
+            executed = true;
+        };
+        auto jsonEventProcessor = std::make_unique<TestJsonEventProcessor>(std::move(publisherImpl));
+        auto eventBus = std::make_unique<EventBus>(std::make_unique<JsonEventAdapter>(std::move(jsonEventProcessor)));
+        auto item = std::make_unique<Item>();
+
+        item->setKey(QVariantMap{{"key", "value"}});
+        item->setEventBus(eventBus.get());
+
+        QCOMPARE(item->value(), QVariant());
+
+        item->execute("test");
+        QVERIFY(executed);
+        auto expected = QString("value");
+        QCOMPARE(item->value(), QVariant(expected));
+
+        item->setEventBus(nullptr);
+    }
+
     void test_item_execute_with_json_and_qml()
     {
         auto executed = false;

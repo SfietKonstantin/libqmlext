@@ -1,6 +1,7 @@
 #include <qmlext/event/json/jsoneventadapter.h>
 
 #include <QDateTime>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QLoggingCategory>
 #include <algorithm>
@@ -85,24 +86,27 @@ void JsonEventAdapter::execute(EventPublisher eventPublisher, const QVariant &ke
 
 QVariant JsonEventAdapter::fromJson(const QByteArray &json)
 {
+    auto jsonArray = QByteArray("[") + json + QByteArray("]");
     auto error = QJsonParseError{};
-    auto document = QJsonDocument::fromJson(json, &error);
+    auto document = QJsonDocument::fromJson(jsonArray, &error);
     if (document.isNull()) {
         qCWarning(logEventJson) << "Could not parse JSON:" << error.errorString();
         return {};
     }
 
-    return recursivelyConvert(document.toVariant());
+    return recursivelyConvert(document.array().at(0).toVariant());
 }
 
 QByteArray JsonEventAdapter::toJson(const QVariant &value)
 {
-    if (!value.isValid() || value.isNull()) {
-        return "null";
-    }
-
-    auto document = QJsonDocument::fromVariant(value);
-    return document.toJson(QJsonDocument::Compact);
+    // Qt do not provide a way to serialize any JSON
+    // so instead we put the value we want to serialize inside
+    // an array. Then we serialize it into its compact
+    // form before chopping out the first and last character
+    auto array = QVariantList{value};
+    auto document = QJsonDocument::fromVariant(array);
+    auto formatted = document.toJson(QJsonDocument::Compact);
+    return formatted.mid(1, formatted.length() - 2);
 }
 
 } // namespace qmlext::event::json
